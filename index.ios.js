@@ -8,6 +8,7 @@ var React = require('react-native');
 var {
   AppRegistry,
   DatePickerIOS,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -17,17 +18,20 @@ var {
 var ReactTasks = React.createClass({
   getInitialState() {
     return {
+      description: '',
       dueDate: new Date(),
     };
   },
 
   render: function() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <TextInput
           style={[styles.text, styles.note]}
           multiline='true'
           placeholder='Enter description...'
+          value={this.state.description}
+          onChangeText={(description)=>this.setState({description})}
         />
         <Text style={[styles.text, styles.label]}>Due date</Text>
         <DatePickerIOS
@@ -35,7 +39,7 @@ var ReactTasks = React.createClass({
           mode='date'
           onDateChange={(dueDate)=>this.setState({dueDate})}
         />
-      </View>
+      </ScrollView>
     );
   }
 });
@@ -51,8 +55,6 @@ var styles = StyleSheet.create({
   },
   note: {
     marginTop: 50,
-    marginLeft: -15,
-    marginRight: -15,
     height: 200,
     borderColor: '#c0c0c0',
     borderWidth: 1,
