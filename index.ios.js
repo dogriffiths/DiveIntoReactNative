@@ -47,19 +47,29 @@ var ReactTasks = React.createClass({
   },
   
   _onPressDial() {
-    var dialUrl = `tel:${this.state.phone}`;
-    LinkingIOS.openURL(dialUrl);
+    if (this.state.phone) {
+      var dialUrl = `tel:${this.state.phone}`;
+      LinkingIOS.openURL(dialUrl);
+    }
   },
   
   _renderDialButton() {
     if (canDial) {
-      return (
-        <View style={{marginLeft: 15}}>
-          <TouchableHighlight style={styles.button} onPress={this._onPressDial}>
-            <Text>Dial</Text>
-          </TouchableHighlight>
-        </View>
-      );
+      if (this.state.phone) {
+        return (
+          <View style={{marginLeft: 15}}>
+            <TouchableHighlight style={styles.button} onPress={this._onPressDial}>
+              <Text style={{color: touchTint}}>Dial</Text>
+            </TouchableHighlight>
+          </View>
+        );
+      } else {
+        return (
+          <View style={[styles.disabledButton, {marginLeft: 15}]}>
+            <Text style={{color: '#c0c0c0'}}>Dial</Text>
+          </View>
+        );
+      }
     }
     return null;
   },
@@ -118,6 +128,8 @@ var ReactTasks = React.createClass({
   }
 });
 
+var touchTint = '#007aff';
+
 var styles = StyleSheet.create({
   text: {
     fontSize: 18,
@@ -142,6 +154,8 @@ var styles = StyleSheet.create({
     paddingTop: 5,
     paddingBottom: 5,
     paddingRight: 5,
+    borderColor: 'white',
+    borderWidth: 1,
   },
   note: {
     marginTop: 50,
@@ -167,10 +181,19 @@ var styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     fontSize: 14,
-    color: '#007aff', 
     borderWidth: 1, 
     borderRadius: 5,
-    borderColor: '#007aff'
+    borderColor: touchTint,
+  },
+  disabledButton: {
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+    fontSize: 14,
+    borderWidth: 1, 
+    borderRadius: 5,
+    borderColor: '#c0c0c0'
   },
 });
 
