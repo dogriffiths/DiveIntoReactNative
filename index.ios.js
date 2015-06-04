@@ -9,6 +9,7 @@ var {
   AppRegistry,
   DatePickerIOS,
   ScrollView,
+  SliderIOS,
   StyleSheet,
   SwitchIOS,
   Text,
@@ -22,7 +23,19 @@ var ReactTasks = React.createClass({
       description: '',
       dueDate: new Date(),
       active: true,
+      priority: 50,
     };
+  },
+  
+  _renderPriority() {
+    var p = Math.round(255 * this.state.priority / 100);
+    var color = `rgb(${p}, ${255 - p}, 0)`;
+    return (
+      <Text style={{
+        width: 40, 
+        color,
+        }}>{Math.round(this.state.priority)}%</Text>
+      );
   },
 
   render: function() {
@@ -50,6 +63,20 @@ var ReactTasks = React.createClass({
             onValueChange={(active)=>this.setState({active})}
           />
           <Text style={[styles.text, {marginLeft: 15, fontSize: 16}]}>Active</Text>
+        </View>
+        <View style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          }}>
+          <Text style={[styles.text, {marginRight: 15, fontSize: 16}]}>Priority</Text>
+          {this._renderPriority()}
+          <SliderIOS
+            style={{flex: 1}}
+            minimumValue='0'
+            maximumValue='100'
+            value={this.state.priority}
+            onValueChange={(priority)=>this.setState({priority})}
+          />
         </View>
       </ScrollView>
     );
