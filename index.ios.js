@@ -84,17 +84,6 @@ var ReactTasks = React.createClass({
           </View>
         </View>
         <View style={styles.withSideLabel}>
-          <Text style={styles.label}>Priority</Text>
-          {this._renderPriority()}
-          <SliderIOS
-            style={{flex: 1, alignItems: 'flex-end'}}
-            minimumValue='0'
-            maximumValue='100'
-            value={this.state.priority}
-            onValueChange={(priority)=>this.setState({priority})}
-          />
-        </View>
-        <View style={styles.withSideLabel}>
           <Text style={styles.label}>Phone</Text>
           <TextInput
             style={[styles.textField, {flex: 1}]}
@@ -104,6 +93,17 @@ var ReactTasks = React.createClass({
             keyboardType='phone-pad'
           />
           {this._renderDialButton()}
+        </View>
+        <View style={styles.withSideLabel}>
+          <Text style={styles.label}>Priority</Text>
+          {this._renderPriority()}
+          <SliderIOS
+            style={{flex: 1, alignItems: 'flex-end'}}
+            minimumValue='0'
+            maximumValue='100'
+            value={this.state.priority}
+            onValueChange={(priority)=>this.setState({priority})}
+          />
         </View>
         <View style={styles.withSideLabel}>
           <Text style={styles.label}>Due date</Text>
@@ -124,24 +124,30 @@ var styles = StyleSheet.create({
   },
   textField: {
     fontSize: 18,
-    padding: 15,
+    //padding: 15,
     borderColor: '#c0c0c0', 
     borderWidth: 1,
+    containerBackgroundColor: 'rgba(0, 0, 0, 0)',
   },
   container: {
     flex: 1,
     marginLeft: 15,
     marginRight: 15,
+    containerBackgroundColor: 'rgba(0, 0, 0, 0)',
   },
   label: {
+    containerBackgroundColor: 'rgba(0, 0, 0, 0)',
     marginRight: 15, 
     fontSize: 16,
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingRight: 5,
   },
   note: {
     marginTop: 50,
     marginBottom: 15,
     padding: 5,
-    height: 150,
+    height: 100,
     borderColor: '#c0c0c0',
     borderWidth: 1,
   },
