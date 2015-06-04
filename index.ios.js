@@ -8,14 +8,21 @@ var React = require('react-native');
 var {
   AppRegistry,
   DatePickerIOS,
+  LinkingIOS,
   ScrollView,
   SliderIOS,
   StyleSheet,
   SwitchIOS,
   Text,
   TextInput,
+  TouchableHighlight,
   View,
 } = React;
+
+var canDial = false;
+
+LinkingIOS.canOpenURL('tel:11111', (supported) => {canDial = true;});
+
 
 var ReactTasks = React.createClass({
   getInitialState() {
@@ -24,6 +31,7 @@ var ReactTasks = React.createClass({
       dueDate: new Date(),
       active: true,
       priority: 50,
+      phone: null,
     };
   },
   
@@ -37,46 +45,69 @@ var ReactTasks = React.createClass({
         }}>{Math.round(this.state.priority)}%</Text>
       );
   },
+  
+  _onPressDial() {
+    var dialUrl = `tel:${this.state.phone}`;
+    LinkingIOS.openURL(dialUrl);
+  },
+  
+  _renderDialButton() {
+    if (canDial) {
+      return (
+        <View style={{marginLeft: 15}}>
+          <TouchableHighlight style={styles.button} onPress={this._onPressDial}>
+            <Text>Dial</Text>
+          </TouchableHighlight>
+        </View>
+      );
+    }
+    return null;
+  },
 
   render: function() {
     return (
       <ScrollView style={styles.container}>
         <TextInput
-          style={[styles.text, styles.note]}
+          style={[styles.textField, styles.note]}
           multiline='true'
           placeholder='Enter description...'
           value={this.state.description}
           onChangeText={(description)=>this.setState({description})}
         />
-        <Text style={[styles.text, styles.label]}>Due date</Text>
+        <Text style={styles.label}>Due date</Text>
         <DatePickerIOS
           date={this.state.dueDate}
           mode='date'
           onDateChange={(dueDate)=>this.setState({dueDate})}
         />
-        <View style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          }}>
+        <View style={styles.withSideLabel}>
+          <Text style={styles.label}>Active</Text>
           <SwitchIOS
             value={this.state.active}
             onValueChange={(active)=>this.setState({active})}
           />
-          <Text style={[styles.text, {marginLeft: 15, fontSize: 16}]}>Active</Text>
         </View>
-        <View style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          }}>
-          <Text style={[styles.text, {marginRight: 15, fontSize: 16}]}>Priority</Text>
+        <View style={styles.withSideLabel}>
+          <Text style={styles.label}>Priority</Text>
           {this._renderPriority()}
           <SliderIOS
-            style={{flex: 1}}
+            style={{flex: 1, alignItems: 'flex-end'}}
             minimumValue='0'
             maximumValue='100'
             value={this.state.priority}
             onValueChange={(priority)=>this.setState({priority})}
           />
+        </View>
+        <View style={styles.withSideLabel}>
+          <Text style={styles.label}>Phone</Text>
+          <TextInput
+            style={[styles.textField, {flex: 1}]}
+            placeholder='XX-XXX-XXXX'
+            value={this.state.phone}
+            onChangeText={(phone)=>this.setState({phone})}
+            keyboardType='phone-pad'
+          />
+          {this._renderDialButton()}
         </View>
       </ScrollView>
     );
@@ -87,20 +118,49 @@ var styles = StyleSheet.create({
   text: {
     fontSize: 18,
   },
+  textField: {
+    fontSize: 18,
+    paddingLeft: 5,
+    paddingRight: 5,
+    borderColor: '#c0c0c0', 
+    borderWidth: 1,
+  },
   container: {
     flex: 1,
     marginLeft: 15,
     marginRight: 15,
   },
+  label: {
+    marginRight: 15, 
+    fontSize: 16,
+  },
   note: {
     marginTop: 50,
-    height: 200,
+    marginBottom: 15,
+    height: 150,
     borderColor: '#c0c0c0',
     borderWidth: 1,
   },
-  label: {
-    fontSize: 16,
-    marginTop: 15,
+  withSideLabel: {
+    flex: 1,
+    alignSelf: 'stretch',
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderTopColor: '#c0c0c0',
+    borderTopWidth: 0.5,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  button: {
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+    fontSize: 14,
+    color: '#007aff', 
+    borderWidth: 1, 
+    borderRadius: 5,
+    borderColor: '#007aff'
   },
 });
 
