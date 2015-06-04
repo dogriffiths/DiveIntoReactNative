@@ -7,6 +7,7 @@
 var React = require('react-native');
 var {
   AppRegistry,
+  DatePickerIOS,
   StyleSheet,
   Text,
   TextInput,
@@ -18,9 +19,14 @@ var ReactTasks = React.createClass({
     return (
       <View style={styles.container}>
         <TextInput
-          style={styles.note}
+          style={[styles.text, styles.note]}
           multiline='true'
           placeholder='Enter description...'
+        />
+        <Text style={[styles.text, styles.label]}>Due date</Text>
+        <DatePickerIOS
+          date={new Date()}
+          mode='date'
         />
       </View>
     );
@@ -28,15 +34,26 @@ var ReactTasks = React.createClass({
 });
 
 var styles = StyleSheet.create({
+  text: {
+    fontSize: 18,
+  },
   container: {
     flex: 1,
+    marginLeft: 15,
+    marginRight: 15,
   },
   note: {
     marginTop: 50,
+    marginLeft: -15,
+    marginRight: -15,
     height: 200,
     borderColor: '#c0c0c0',
     borderWidth: 1,
-  }
+  },
+  label: {
+    fontSize: 16,
+    marginTop: 15,
+  },
 });
 
 AppRegistry.registerComponent('ReactTasks', () => ReactTasks);
