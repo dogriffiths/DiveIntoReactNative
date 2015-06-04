@@ -21,7 +21,7 @@ var {
 
 var canDial = false;
 
-LinkingIOS.canOpenURL('tel:11111', (supported) => {canDial = true;});
+LinkingIOS.canOpenURL('tel:11111', (supported) => {canDial = supported;});
 
 
 var ReactTasks = React.createClass({
@@ -74,18 +74,14 @@ var ReactTasks = React.createClass({
           value={this.state.description}
           onChangeText={(description)=>this.setState({description})}
         />
-        <Text style={styles.label}>Due date</Text>
-        <DatePickerIOS
-          date={this.state.dueDate}
-          mode='date'
-          onDateChange={(dueDate)=>this.setState({dueDate})}
-        />
-        <View style={styles.withSideLabel}>
+        <View style={{flexDirection: 'row', alignItems: 'center', paddingBottom: 15}}>
           <Text style={styles.label}>Active</Text>
-          <SwitchIOS
-            value={this.state.active}
-            onValueChange={(active)=>this.setState({active})}
-          />
+          <View style={{flex: 1, alignItems: 'flex-end'}}>
+            <SwitchIOS
+              value={this.state.active}
+              onValueChange={(active)=>this.setState({active})}
+            />
+          </View>
         </View>
         <View style={styles.withSideLabel}>
           <Text style={styles.label}>Priority</Text>
@@ -109,6 +105,14 @@ var ReactTasks = React.createClass({
           />
           {this._renderDialButton()}
         </View>
+        <View style={styles.withSideLabel}>
+          <Text style={styles.label}>Due date</Text>
+        </View>
+        <DatePickerIOS
+          date={this.state.dueDate}
+          mode='date'
+          onDateChange={(dueDate)=>this.setState({dueDate})}
+        />
       </ScrollView>
     );
   }
@@ -120,8 +124,7 @@ var styles = StyleSheet.create({
   },
   textField: {
     fontSize: 18,
-    paddingLeft: 5,
-    paddingRight: 5,
+    padding: 15,
     borderColor: '#c0c0c0', 
     borderWidth: 1,
   },
@@ -137,6 +140,7 @@ var styles = StyleSheet.create({
   note: {
     marginTop: 50,
     marginBottom: 15,
+    padding: 5,
     height: 150,
     borderColor: '#c0c0c0',
     borderWidth: 1,
