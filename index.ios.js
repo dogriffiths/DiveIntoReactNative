@@ -15,6 +15,12 @@ var {
 } = React;
 
 var ReactTasks = React.createClass({
+  getInitialState() {
+    return {
+      dueDate: new Date(),
+    };
+  },
+
   render: function() {
     return (
       <View style={styles.container}>
@@ -25,8 +31,9 @@ var ReactTasks = React.createClass({
         />
         <Text style={[styles.text, styles.label]}>Due date</Text>
         <DatePickerIOS
-          date={new Date()}
+          date={this.state.dueDate}
           mode='date'
+          onDateChange={(dueDate)=>this.setState({dueDate})}
         />
       </View>
     );
