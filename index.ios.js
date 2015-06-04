@@ -10,6 +10,7 @@ var {
   DatePickerIOS,
   ScrollView,
   StyleSheet,
+  SwitchIOS,
   Text,
   TextInput,
   View,
@@ -20,6 +21,7 @@ var ReactTasks = React.createClass({
     return {
       description: '',
       dueDate: new Date(),
+      active: true,
     };
   },
 
@@ -39,6 +41,16 @@ var ReactTasks = React.createClass({
           mode='date'
           onDateChange={(dueDate)=>this.setState({dueDate})}
         />
+        <View style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          }}>
+          <SwitchIOS
+            value={this.state.active}
+            onValueChange={(active)=>this.setState({active})}
+          />
+          <Text style={[styles.text, {marginLeft: 15, fontSize: 16}]}>Active</Text>
+        </View>
       </ScrollView>
     );
   }
