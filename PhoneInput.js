@@ -100,7 +100,6 @@ var styles = StyleSheet.create({
   row: {
     flex: 1,
     alignSelf: 'stretch',
-    marginRight: 6,
     flexDirection: 'row',
     alignItems: 'center',
   },
