@@ -18,12 +18,24 @@ var {
 
 var TaskInput = React.createClass({
   getInitialState() {
-    return {
+    var state = {
+      id: null,
       description: '',
       active: true,
       priority: 50,
       phone: null,
     };
+    var task =  this.props.task;
+    if (task) {
+      state = {
+        id: task.id,
+        description: task.description,
+        active: task.active,
+        priority: task.priority,
+        phone: task.phone,
+      };
+    }
+    return state;
   },
   
   _renderPriority() {
