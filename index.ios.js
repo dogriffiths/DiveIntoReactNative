@@ -5,7 +5,9 @@
 'use strict';
 
 var React = require('react-native');
+var Tasks = require('./Tasks');
 var TaskInput = require('./TaskInput');
+var TaskStorage = require('./TaskStorage');
 var {
   AlertIOS,
   AppRegistry,
@@ -22,32 +24,11 @@ var {
 } = React;
 
 var ReactTasks = React.createClass({
-  getInitialState() {
-    AsyncStorage.removeItem('tasks');
-    return {};
-  },
 
   _onSaveTask() {
     var nav = this.refs.navigator;
     var newTask = nav.refs.newTask.state;
-    AsyncStorage.getItem('tasks')
-    .then((tasksString)=> {
-      var tasks = null;
-      if (tasksString !== null) {
-        tasks = JSON.parse(tasksString);
-        tasks.push(newTask);
-      } else {
-        tasks = [newTask];
-      }
-      AsyncStorage.setItem('tasks', JSON.stringify(tasks))
-      .catch((error) => {
-        AlertIOS.alert('Storing tasks', error.message);
-      });
-      nav.pop();
-    })
-    .catch((error) => {
-      AlertIOS.alert('Reading tasks', error.message);
-    });
+    TaskStorage.save(newTask, ()=>{nav.refs.tasks.refresh(); nav.pop();});
   },
   
   _onNewTask() {
@@ -65,8 +46,9 @@ var ReactTasks = React.createClass({
       <NavigatorIOS
         ref="navigator"
         initialRoute={{
-          component: View,
+          component: Tasks,
           title: 'Tasks',
+          passProps: {ref: 'tasks'},
           rightButtonTitle: 'New',
           onRightButtonPress: this._onNewTask,
           }}
