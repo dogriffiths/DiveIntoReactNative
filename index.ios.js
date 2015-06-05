@@ -5,9 +5,9 @@
 'use strict';
 
 var React = require('react-native');
+var PhoneInput = require('./PhoneInput');
 var {
   AppRegistry,
-  LinkingIOS,
   ScrollView,
   SliderIOS,
   StyleSheet,
@@ -17,11 +17,6 @@ var {
   TouchableHighlight,
   View,
 } = React;
-
-var canDial = false;
-
-LinkingIOS.canOpenURL('tel:11111', (supported) => {canDial = supported;});
-
 
 var ReactTasks = React.createClass({
   getInitialState() {
@@ -44,34 +39,6 @@ var ReactTasks = React.createClass({
       );
   },
   
-  _onPressDial() {
-    if (this.state.phone) {
-      var dialUrl = `tel:${this.state.phone}`;
-      LinkingIOS.openURL(dialUrl);
-    }
-  },
-  
-  _renderDialButton() {
-    if (canDial) {
-      if (this.state.phone) {
-        return (
-          <View style={{marginLeft: 15}}>
-            <TouchableHighlight style={styles.button} onPress={this._onPressDial}>
-              <Text style={{color: touchTint}}>Dial</Text>
-            </TouchableHighlight>
-          </View>
-        );
-      } else {
-        return (
-          <View style={[styles.disabledButton, {marginLeft: 15}]}>
-            <Text style={{color: '#c0c0c0'}}>Dial</Text>
-          </View>
-        );
-      }
-    }
-    return null;
-  },
-
   render: function() {
     return (
       <ScrollView style={styles.container}>
@@ -92,14 +59,10 @@ var ReactTasks = React.createClass({
           </View>
         </View>
         <View style={styles.row}>
-          <TextInput
-            style={[styles.textField, styles.phone]}
-            placeholder='Phone'
+          <PhoneInput
             value={this.state.phone}
-            onChangeText={(phone)=>this.setState({phone})}
-            keyboardType='phone-pad'
+            onValueChange={(phone)=>this.setState({phone})}
           />
-          {this._renderDialButton()}
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Priority</Text>
@@ -116,8 +79,6 @@ var ReactTasks = React.createClass({
     );
   }
 });
-
-var touchTint = '#007aff';
 
 var styles = StyleSheet.create({
   text: {
@@ -149,15 +110,6 @@ var styles = StyleSheet.create({
     padding: 5,
     height: 100,
   },
-  phone: {
-    marginRight: 5, 
-    fontSize: 18,
-    paddingTop: 6,
-    paddingBottom: 6,
-    flex: 1, 
-    alignSelf: 'stretch',
-    height: 26,
-  },
   row: {
     flex: 1,
     alignSelf: 'stretch',
@@ -168,26 +120,6 @@ var styles = StyleSheet.create({
     marginRight: 6,
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  button: {
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingLeft: 10,
-    paddingRight: 10,
-    fontSize: 14,
-    borderWidth: 1, 
-    borderRadius: 5,
-    borderColor: touchTint,
-  },
-  disabledButton: {
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingLeft: 10,
-    paddingRight: 10,
-    fontSize: 14,
-    borderWidth: 1, 
-    borderRadius: 5,
-    borderColor: '#c0c0c0'
   },
 });
 
