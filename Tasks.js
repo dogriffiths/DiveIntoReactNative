@@ -19,16 +19,23 @@ var Tasks = React.createClass({
 
     getInitialState() {
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        TaskStorage.load(()=>{
-          this.setState({datasource: ds.cloneWithRows(TaskStorage.all())});
-        });
         return {
             ds,
             selected: null,
             datasource: ds.cloneWithRows(TaskStorage.all()),
         };
     },
-    
+
+    componentDidMount() {
+      TaskStorage.on(TaskStorage.CHANGE_EVENT, this.refresh);
+
+      TaskStorage.load();
+    },
+
+    componentWillUnmount() {
+      TaskStorage.removeListener(TaskStorage.CHANGE_EVENT, this.refresh);
+    },
+
     refresh() {
       this.setState({datasource: this.state.ds.cloneWithRows(TaskStorage.all())});
     },

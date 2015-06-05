@@ -28,7 +28,8 @@ var ReactTasks = React.createClass({
   _onSaveTask() {
     var nav = this.refs.navigator;
     var newTask = nav.refs.newTask.state;
-    TaskStorage.save(newTask, ()=>{nav.refs.tasks.refresh(); nav.pop();});
+    TaskStorage.save(newTask);
+    nav.pop();
   },
   
   _onNewTask() {
