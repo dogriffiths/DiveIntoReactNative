@@ -39,7 +39,7 @@ var TaskInput = React.createClass({
   
   render: function() {
     return (
-      <View>
+      <ScrollView style={styles.container}>
         <TextInput
           style={[styles.textField, styles.description]}
           multiline='true'
@@ -73,12 +73,18 @@ var TaskInput = React.createClass({
             onValueChange={(priority)=>this.setState({priority})}
           />
         </View>
-      </View>
+      </ScrollView>
     );
   }
 });
 
 var styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginLeft: 15,
+    marginRight: 9,
+    containerBackgroundColor: 'rgba(0, 0, 0, 0)',
+  },
   text: {
     fontSize: 18,
   },

@@ -8,6 +8,7 @@ var React = require('react-native');
 var TaskInput = require('./TaskInput');
 var {
   AppRegistry,
+  NavigatorIOS,
   ScrollView,
   SliderIOS,
   StyleSheet,
@@ -32,11 +33,13 @@ var ReactTasks = React.createClass({
   
   render: function() {
     return (
-      <ScrollView style={styles.container}>
-        <TaskInput 
-          value={this.state.task}
-        />
-      </ScrollView>
+      <NavigatorIOS
+        initialRoute={{
+          component: TaskInput,
+          title: 'Tasks',
+          }}
+        style={{flex: 1}}
+      />
     );
   }
 });
