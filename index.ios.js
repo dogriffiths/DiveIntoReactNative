@@ -31,12 +31,22 @@ var ReactTasks = React.createClass({
     };
   },
   
+  _onNewTask() {
+    this.refs.navigator.push({
+      title: 'New task',
+      component: TaskInput,
+    });
+  },
+  
   render: function() {
     return (
       <NavigatorIOS
+        ref="navigator"
         initialRoute={{
-          component: TaskInput,
+          component: View,
           title: 'Tasks',
+          rightButtonTitle: 'New',
+          onRightButtonPress: this._onNewTask,
           }}
         style={{flex: 1}}
       />
