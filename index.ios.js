@@ -7,7 +7,6 @@
 var React = require('react-native');
 var {
   AppRegistry,
-  DatePickerIOS,
   LinkingIOS,
   ScrollView,
   SliderIOS,
@@ -28,7 +27,6 @@ var ReactTasks = React.createClass({
   getInitialState() {
     return {
       description: '',
-      dueDate: new Date(),
       active: true,
       priority: 50,
       phone: null,
@@ -78,33 +76,32 @@ var ReactTasks = React.createClass({
     return (
       <ScrollView style={styles.container}>
         <TextInput
-          style={[styles.textField, styles.note]}
+          style={[styles.textField, styles.description]}
           multiline='true'
           placeholder='Enter description...'
           value={this.state.description}
           onChangeText={(description)=>this.setState({description})}
         />
-        <View style={{flexDirection: 'row', alignItems: 'center', paddingBottom: 15}}>
+        <View style={{flexDirection: 'row', alignItems: 'center', paddingBottom: 6}}>
           <Text style={styles.label}>Active</Text>
-          <View style={{flex: 1, alignItems: 'flex-end'}}>
+          <View style={{flex: 1, alignItems: 'flex-end', paddingRight: 6}}>
             <SwitchIOS
               value={this.state.active}
               onValueChange={(active)=>this.setState({active})}
             />
           </View>
         </View>
-        <View style={styles.withSideLabel}>
-          <Text style={styles.label}>Phone</Text>
+        <View style={styles.row}>
           <TextInput
-            style={[styles.textField, {flex: 1}]}
-            placeholder='XX-XXX-XXXX'
+            style={[styles.textField, styles.phone]}
+            placeholder='Phone'
             value={this.state.phone}
             onChangeText={(phone)=>this.setState({phone})}
             keyboardType='phone-pad'
           />
           {this._renderDialButton()}
         </View>
-        <View style={styles.withSideLabel}>
+        <View style={styles.row}>
           <Text style={styles.label}>Priority</Text>
           {this._renderPriority()}
           <SliderIOS
@@ -115,14 +112,6 @@ var ReactTasks = React.createClass({
             onValueChange={(priority)=>this.setState({priority})}
           />
         </View>
-        <View style={styles.withSideLabel}>
-          <Text style={styles.label}>Due date</Text>
-        </View>
-        <DatePickerIOS
-          date={this.state.dueDate}
-          mode='date'
-          onDateChange={(dueDate)=>this.setState({dueDate})}
-        />
       </ScrollView>
     );
   }
@@ -136,15 +125,13 @@ var styles = StyleSheet.create({
   },
   textField: {
     fontSize: 18,
-    //padding: 15,
-    borderColor: '#c0c0c0', 
-    borderWidth: 1,
     containerBackgroundColor: 'rgba(0, 0, 0, 0)',
   },
   container: {
+    marginTop: 50,
     flex: 1,
     marginLeft: 15,
-    marginRight: 15,
+    marginRight: 9,
     containerBackgroundColor: 'rgba(0, 0, 0, 0)',
   },
   label: {
@@ -157,21 +144,28 @@ var styles = StyleSheet.create({
     borderColor: 'white',
     borderWidth: 1,
   },
-  note: {
-    marginTop: 50,
+  description: {
     marginBottom: 15,
     padding: 5,
     height: 100,
-    borderColor: '#c0c0c0',
-    borderWidth: 1,
   },
-  withSideLabel: {
+  phone: {
+    marginRight: 5, 
+    fontSize: 18,
+    paddingTop: 6,
+    paddingBottom: 6,
+    flex: 1, 
+    alignSelf: 'stretch',
+    height: 26,
+  },
+  row: {
     flex: 1,
     alignSelf: 'stretch',
-    paddingTop: 15,
-    paddingBottom: 15,
     borderTopColor: '#c0c0c0',
     borderTopWidth: 0.5,
+    paddingTop: 6,
+    paddingBottom: 6,
+    marginRight: 6,
     flexDirection: 'row',
     alignItems: 'center',
   },
