@@ -69,8 +69,8 @@ var PhoneInput = React.createClass({
           value={this.state.phone}
           onChangeText={(phone)=>{
             this.setState({phone});
-            if (this.onValueChange) {
-              this.onValueChange(phone);
+            if (this.props.onValueChange) {
+              this.props.onValueChange(phone);
             }
           }}
           keyboardType='phone-pad'

@@ -7,7 +7,9 @@
 var React = require('react-native');
 var TaskInput = require('./TaskInput');
 var {
+  AlertIOS,
   AppRegistry,
+  AsyncStorage,
   NavigatorIOS,
   ScrollView,
   SliderIOS,
@@ -21,20 +23,40 @@ var {
 
 var ReactTasks = React.createClass({
   getInitialState() {
-    return {
-      task: {
-        description: '',
-        active: true,
-        priority: 50,
-        phone: null,
+    AsyncStorage.removeItem('tasks');
+    return {};
+  },
+
+  _onSaveTask() {
+    var nav = this.refs.navigator;
+    var newTask = nav.refs.newTask.state;
+    AsyncStorage.getItem('tasks')
+    .then((tasksString)=> {
+      var tasks = null;
+      if (tasksString !== null) {
+        tasks = JSON.parse(tasksString);
+        tasks.push(newTask);
+      } else {
+        tasks = [newTask];
       }
-    };
+      AsyncStorage.setItem('tasks', JSON.stringify(tasks))
+      .catch((error) => {
+        AlertIOS.alert('Storing tasks', error.message);
+      });
+      nav.pop();
+    })
+    .catch((error) => {
+      AlertIOS.alert('Reading tasks', error.message);
+    });
   },
   
   _onNewTask() {
     this.refs.navigator.push({
       title: 'New task',
       component: TaskInput,
+      passProps: {ref: 'newTask'},
+      rightButtonTitle: 'Save',
+      onRightButtonPress: this._onSaveTask,
     });
   },
   
