@@ -5,6 +5,7 @@
 'use strict';
 
 var TaskInput = require('./TaskInput');
+var EventEmitter = require('events').EventEmitter;
 var TaskStorage = require('./TaskStorage');
 var React = require('react-native');
 var {
@@ -39,17 +40,17 @@ var Tasks = React.createClass({
       this.setState({datasource: this.state.datasource.cloneWithRows(TaskStorage.all())});
     },
 
-    _onSaveTask() {
-      this.props.navigator.pop();
-    },
-
     _pressRow(rowId, task) {
-      this.props.navigator.push({
+      var eventEmitter = new EventEmitter();
+      var nav = this.props.navigator;
+      nav.push({
         title: 'Edit task',
         component: TaskInput,
-        passProps: {ref: 'newTask', task: task},
+        passProps: {ref: 'editTask', task: task, eventEmitter},
         rightButtonTitle: 'Save',
-        onRightButtonPress: this._onSaveTask,
+        onRightButtonPress: (() => {
+          eventEmitter.emit('saveClicked');
+        }),
       });
     },
 
@@ -58,7 +59,7 @@ var Tasks = React.createClass({
           <View style={styles.container}>
             <ListView
               dataSource={this.state.datasource}
-              initialListSize='24'
+              initialListSize={24}
               style={styles.list}
               renderRow={this._renderRow}
             />
@@ -74,11 +75,11 @@ var Tasks = React.createClass({
             style={styles.row}
             onPress={() => this._pressRow(rowId, task)}
           >
-            <View style={styles.listText}>
-            <Text numberOfLines='1' style={{fontSize: 16}}>
-              {task.description}
-            </Text>
-            <Text style={{fontSize: 12, color,}}>{Math.round(task.priority)}%</Text>
+            <View style={{marginLeft: 5}}>
+              <Text numberOfLines={1} style={{fontSize: 16}}>
+                {task.description}
+              </Text>
+              <Text style={{fontSize: 12, color,}}>{Math.round(task.priority)}%</Text>
             </View>
           </TouchableHighlight>);
     }
@@ -88,10 +89,6 @@ var styles = StyleSheet.create({
   list: {
       height: 100,
       alignSelf: 'stretch',
-  },
-  listText: {
-    fontSize: 26,
-    marginLeft: 5,
   },
   container: {
     flex: 1,

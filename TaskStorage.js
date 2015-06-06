@@ -40,9 +40,13 @@ var TaskStorage = assign({}, EventEmitter.prototype, {
     return _tasks;
   },
   
-  save(newTask) {
-    newTask.id = _tasks.length;
-    _tasks.push(newTask);
+  save(task) {
+    if (task.id !== null) {
+      _tasks[task.id] = task;
+    } else {
+      task.id = _tasks.length;
+      _tasks.push(task);
+    }
     this._saveTasks();
   },
   

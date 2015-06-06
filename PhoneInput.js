@@ -118,7 +118,6 @@ var styles = StyleSheet.create({
     paddingBottom: 5,
     paddingLeft: 10,
     paddingRight: 10,
-    fontSize: 14,
     borderWidth: 1, 
     borderRadius: 5,
     borderColor: '#c0c0c0'

@@ -39,17 +39,20 @@ var TaskInput = React.createClass({
     return state;
   },
   
-  saveTask() {
-    var state = this.state;
-    var task = {
-      id: state.id,
-      description: state.description,
-      active: state.active,
-      priority: state.priority,
-      phone: state.phone,
-    };
-    TaskStorage.save(task);
-  },
+  componentDidMount() {
+    this.props.eventEmitter.on('saveClicked', () => {
+      var state = this.state;
+      var task = {
+        id: state.id,
+        description: state.description,
+        active: state.active,
+        priority: state.priority,
+        phone: state.phone,
+      };
+      TaskStorage.save(task);
+      this.props.navigator.pop();
+    });
+  },  
   
   _renderPriority() {
     var p = Math.round(255 * this.state.priority / 100);
@@ -67,7 +70,7 @@ var TaskInput = React.createClass({
       <ScrollView style={styles.container}>
         <TextInput
           style={[styles.textField, styles.description]}
-          multiline='true'
+          multiline={true}
           placeholder='Enter description...'
           value={this.state.description}
           onChangeText={(description)=>this.setState({description})}
@@ -92,8 +95,8 @@ var TaskInput = React.createClass({
           {this._renderPriority()}
           <SliderIOS
             style={{flex: 1, alignItems: 'flex-end'}}
-            minimumValue='0'
-            maximumValue='100'
+            minimumValue={0}
+            maximumValue={100}
             value={this.state.priority}
             onValueChange={(priority)=>this.setState({priority})}
           />
@@ -108,7 +111,6 @@ var styles = StyleSheet.create({
     flex: 1,
     marginLeft: 15,
     marginRight: 9,
-    containerBackgroundColor: 'rgba(0, 0, 0, 0)',
   },
   text: {
     fontSize: 18,

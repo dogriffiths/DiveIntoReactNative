@@ -5,6 +5,7 @@
 'use strict';
 
 var React = require('react-native');
+var EventEmitter = require('events').EventEmitter;
 var Tasks = require('./Tasks');
 var TaskInput = require('./TaskInput');
 var {
@@ -23,18 +24,21 @@ var {
 
 var ReactTasks = React.createClass({
 
-  _onSaveTask() {
-    var newTask = this.refs.navigator.refs.newTask.saveTask();
+  _onSaveClicked() {
+    this.refs.navigator.refs.newTask.saveTask();
     this.refs.navigator.pop();
   },
   
   _onNewTask() {
+    var eventEmitter = new EventEmitter();
     this.refs.navigator.push({
       title: 'New task',
       component: TaskInput,
-      passProps: {ref: 'newTask'},
+      passProps: {ref: 'newTask', eventEmitter},
       rightButtonTitle: 'Save',
-      onRightButtonPress: this._onSaveTask,
+      onRightButtonPress: (() => {
+        eventEmitter.emit('saveClicked');
+      }),
     });
   },
   
@@ -53,16 +57,6 @@ var ReactTasks = React.createClass({
       />
     );
   }
-});
-
-var styles = StyleSheet.create({
-  container: {
-    marginTop: 50,
-    flex: 1,
-    marginLeft: 15,
-    marginRight: 9,
-    containerBackgroundColor: 'rgba(0, 0, 0, 0)',
-  },
 });
 
 AppRegistry.registerComponent('ReactTasks', () => ReactTasks);
