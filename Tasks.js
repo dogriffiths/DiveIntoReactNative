@@ -73,6 +73,7 @@ var Tasks = React.createClass({
         return (
           <TouchableHighlight 
             style={styles.row}
+            underlayColor='#f4f4f4'
             onPress={() => this._pressRow(rowId, task)}
           >
             <View style={{marginLeft: 5}}>

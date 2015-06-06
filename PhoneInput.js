@@ -45,7 +45,7 @@ var PhoneInput = React.createClass({
         return (
           <View style={{marginLeft: 15}}>
             <TouchableHighlight style={styles.button} onPress={this._onPressDial}>
-              <Text style={{color: touchTint}}>Dial</Text>
+              <Text style={{color: '#007aff'}}>Dial</Text>
             </TouchableHighlight>
           </View>
         );
@@ -81,8 +81,6 @@ var PhoneInput = React.createClass({
   }
 });
 
-var touchTint = '#007aff';
-
 var styles = StyleSheet.create({
   textField: {
     fontSize: 18,
@@ -111,7 +109,7 @@ var styles = StyleSheet.create({
     fontSize: 14,
     borderWidth: 1, 
     borderRadius: 5,
-    borderColor: touchTint,
+    borderColor: '#007aff',
   },
   disabledButton: {
     paddingTop: 5,
@@ -120,7 +118,7 @@ var styles = StyleSheet.create({
     paddingRight: 10,
     borderWidth: 1, 
     borderRadius: 5,
-    borderColor: '#c0c0c0'
+    borderColor: '#c0c0c0',
   },
 });
 

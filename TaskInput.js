@@ -54,6 +54,10 @@ var TaskInput = React.createClass({
     });
   },  
   
+  componentWillUnmount() {
+    this.props.eventEmitter.removeAllListeners('saveClicked');
+  },
+
   _renderPriority() {
     var p = Math.round(255 * this.state.priority / 100);
     var color = `rgb(${p}, ${255 - p}, 0)`;

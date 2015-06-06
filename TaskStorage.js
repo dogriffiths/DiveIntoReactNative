@@ -37,7 +37,7 @@ var TaskStorage = assign({}, EventEmitter.prototype, {
   },
   
   all() {
-    return _tasks;
+    return _tasks.slice();
   },
   
   save(task) {
