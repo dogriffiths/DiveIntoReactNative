@@ -7,11 +7,9 @@
 var React = require('react-native');
 var Tasks = require('./Tasks');
 var TaskInput = require('./TaskInput');
-var TaskStorage = require('./TaskStorage');
 var {
   AlertIOS,
   AppRegistry,
-  AsyncStorage,
   NavigatorIOS,
   ScrollView,
   SliderIOS,
@@ -26,10 +24,8 @@ var {
 var ReactTasks = React.createClass({
 
   _onSaveTask() {
-    var nav = this.refs.navigator;
-    var newTask = nav.refs.newTask.state;
-    TaskStorage.save(newTask);
-    nav.pop();
+    var newTask = this.refs.navigator.refs.newTask.saveTask();
+    this.refs.navigator.pop();
   },
   
   _onNewTask() {

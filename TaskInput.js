@@ -6,6 +6,7 @@
 
 var React = require('react-native');
 var PhoneInput = require('./PhoneInput');
+var TaskStorage = require('./TaskStorage');
 var {
   ScrollView,
   SliderIOS,
@@ -36,6 +37,18 @@ var TaskInput = React.createClass({
       };
     }
     return state;
+  },
+  
+  saveTask() {
+    var state = this.state;
+    var task = {
+      id: state.id,
+      description: state.description,
+      active: state.active,
+      priority: state.priority,
+      phone: state.phone,
+    };
+    TaskStorage.save(task);
   },
   
   _renderPriority() {
