@@ -14,24 +14,49 @@ var {
 } = React;
 
 var Map = React.createClass({
+  componentDidMount() {
+    this.props.eventEmitter.on('setPressed', this._onLocationSet);
+  },  
+  
+  componentWillUnmount() {
+    this.props.eventEmitter.removeAllListeners('setPressed');
+  },
+  
+  getInitialState() {
+      return {
+          mapRegion: this.props.mapRegion,
+      };
+  },
+  
+  _onLocationSet() {
+    this.props.onLocationSet(this.state.mapRegion);
+    this.props.navigator.pop();
+  },
 
-    getInitialState() {
-        return {
-            mapRegion: this.props.mapRegion 
-            || {latitude: 0, longitude: 0, latitudeDelta: 80, longitudeDelta: 80},
-        };
-    },
+  _onRegionChangeComplete(region) {
+    this.setState({
+      mapRegion: {
+        latitude: region.latitude,
+        longitude: region.longitude,
+        latitudeDelta: region.latitudeDelta,
+        longitudeDelta: region.longitudeDelta,
+      }
+    });
+  },
 
-    render() {
-        return (
-                <View style={styles.container}>
-                <MapView
+  render() {
+      return (
+        <View style={styles.container}>
+          <MapView
+            ref="map"
             style={{flex: 1, alignSelf: 'stretch'}}
             region={this.state.mapRegion}
-                />
-            </View>
-        );
-    },
+            showsUserLocation={this.state.mapRegion === null}
+            onRegionChangeComplete={this._onRegionChangeComplete}
+          />
+        </View>
+      );
+  },
 });
 
 var styles = StyleSheet.create({

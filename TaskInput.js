@@ -5,6 +5,7 @@
 'use strict';
 
 var React = require('react-native');
+var EventEmitter = require('events').EventEmitter;
 var PhoneInput = require('./PhoneInput');
 var Map = require('./Map');
 var TaskStorage = require('./TaskStorage');
@@ -27,6 +28,7 @@ var TaskInput = React.createClass({
       active: true,
       priority: 50,
       phone: null,
+      location: null,
     };
     var task =  this.props.task;
     if (task) {
@@ -36,6 +38,7 @@ var TaskInput = React.createClass({
         active: task.active,
         priority: task.priority,
         phone: task.phone,
+        location: task.location,
       };
     }
     return state;
@@ -50,6 +53,7 @@ var TaskInput = React.createClass({
         active: state.active,
         priority: state.priority,
         phone: state.phone,
+        location: state.location,
       };
       TaskStorage.save(task);
       this.props.navigator.pop();
@@ -78,14 +82,20 @@ var TaskInput = React.createClass({
   
   _onPressLocation() {
       var nav = this.props.navigator;
+      var eventEmitter = new EventEmitter();
       nav.push({
         title: 'Location',
         component: Map,
         passProps: {
-          mapRegion: {latitude: 0, longitude: 0, latitudeDelta: 20, longitudeDelta: 20},
+          mapRegion: this.state.location,
+          eventEmitter,
+          onLocationSet: (region) => {
+            this.state.location = region;
+          },
         },
         rightButtonTitle: 'Set',
         onRightButtonPress: (() => {
+          eventEmitter.emit('setPressed');
         }),
       });
   },
