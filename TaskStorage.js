@@ -6,6 +6,7 @@
 
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
+var uuid = require('node-uuid');
 var React = require('react-native');
 var {
   AlertIOS,
@@ -14,7 +15,7 @@ var {
 
 var STORAGE_KEY='ReactTasks:tasks';
 
-var _tasks = [];
+var _tasks = {};
 
 var TaskStorage = assign({}, EventEmitter.prototype, {
 
@@ -37,16 +38,22 @@ var TaskStorage = assign({}, EventEmitter.prototype, {
   },
   
   all() {
-    return _tasks.slice();
+    var tasksArray = [];
+
+    for (var taskId in _tasks) {
+      if (_tasks.hasOwnProperty(taskId)) {
+        tasksArray.push(_tasks[taskId]);
+      }
+    }
+    
+    return tasksArray;
   },
   
   save(task) {
-    if (task.id !== null) {
-      _tasks[task.id] = task;
-    } else {
-      task.id = _tasks.length;
-      _tasks.push(task);
+    if (task.id === null) {
+      task.id = uuid.v4();
     }
+    _tasks[task.id] = task;
     this._saveTasks();
   },
   
