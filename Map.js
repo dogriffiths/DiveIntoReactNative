@@ -50,7 +50,7 @@ var Map = React.createClass({
           <MapView
             ref="map"
             style={{flex: 1, alignSelf: 'stretch'}}
-            region={this.state.mapRegion}
+            region={this.props.mapRegion}
             showsUserLocation={this.state.mapRegion === null}
             onRegionChangeComplete={this._onRegionChangeComplete}
           />
