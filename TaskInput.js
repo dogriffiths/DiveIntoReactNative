@@ -14,6 +14,7 @@ var {
   SwitchIOS,
   Text,
   TextInput,
+  TouchableHighlight,
   View,
 } = React;
 
@@ -69,6 +70,24 @@ var TaskInput = React.createClass({
       );
   },
   
+  _onPressDelete() {
+    TaskStorage.delete(this.state.id);
+    this.props.navigator.pop();
+  },
+  
+  _renderDeleteButton() {
+    if (this.state.id) {
+      return (
+        <View>
+          <TouchableHighlight style={styles.button} onPress={this._onPressDelete}>
+            <Text style={{color: '#ee0000'}}>Delete</Text>
+          </TouchableHighlight>
+        </View>
+      );
+    }
+    return null;
+  },
+  
   render: function() {
     return (
       <ScrollView style={styles.container}>
@@ -105,6 +124,7 @@ var TaskInput = React.createClass({
             onValueChange={(priority)=>this.setState({priority})}
           />
         </View>
+        {this._renderDeleteButton()}
       </ScrollView>
     );
   }
@@ -148,6 +168,17 @@ var styles = StyleSheet.create({
     marginRight: 6,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  button: {
+    width: 63,
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+    fontSize: 14,
+    borderWidth: 1, 
+    borderRadius: 5,
+    borderColor: '#ee0000',
   },
 });
 

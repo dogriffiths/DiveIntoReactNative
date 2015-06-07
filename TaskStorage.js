@@ -57,6 +57,11 @@ var TaskStorage = assign({}, EventEmitter.prototype, {
     this._saveTasks();
   },
   
+  delete(taskId) {
+    delete _tasks[taskId];
+    this._saveTasks();
+  },
+  
   _saveTasks() {
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(_tasks))
     .catch((error) => {
