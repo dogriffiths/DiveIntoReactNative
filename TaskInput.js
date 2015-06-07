@@ -6,6 +6,7 @@
 
 var React = require('react-native');
 var PhoneInput = require('./PhoneInput');
+var Map = require('./Map');
 var TaskStorage = require('./TaskStorage');
 var {
   ScrollView,
@@ -75,6 +76,20 @@ var TaskInput = React.createClass({
     this.props.navigator.pop();
   },
   
+  _onPressLocation() {
+      var nav = this.props.navigator;
+      nav.push({
+        title: 'Location',
+        component: Map,
+        passProps: {
+          mapRegion: {latitude: 0, longitude: 0, latitudeDelta: 20, longitudeDelta: 20},
+        },
+        rightButtonTitle: 'Set',
+        onRightButtonPress: (() => {
+        }),
+      });
+  },
+  
   _renderDeleteButton() {
     if (this.state.id) {
       return (
@@ -123,6 +138,11 @@ var TaskInput = React.createClass({
             value={this.state.priority}
             onValueChange={(priority)=>this.setState({priority})}
           />
+        </View>
+        <View style={styles.row}>
+          <TouchableHighlight onPress={this._onPressLocation}>
+            <Text style={[styles.label, {color: '#007aff'}]}>Location</Text>
+          </TouchableHighlight>
         </View>
         {this._renderDeleteButton()}
       </ScrollView>
