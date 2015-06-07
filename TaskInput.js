@@ -120,7 +120,7 @@ var TaskInput = React.createClass({
           style={[styles.textField, styles.description]}
           multiline={true}
           placeholder='Enter description...'
-          value={this.props.task.description}
+          value={this.props.task ? this.props.task.description : ''}
           onChangeText={(description)=>this.setState({description})}
         />
         <View style={{flexDirection: 'row', alignItems: 'center', paddingBottom: 6}}>
@@ -134,7 +134,7 @@ var TaskInput = React.createClass({
         </View>
         <View style={styles.row}>
           <PhoneInput
-            value={this.props.task.phone}
+            value={this.props.task ? this.props.task.phone : ''}
             onValueChange={(phone)=>this.setState({phone})}
           />
         </View>
@@ -145,7 +145,7 @@ var TaskInput = React.createClass({
             style={{flex: 1, alignItems: 'flex-end'}}
             minimumValue={0}
             maximumValue={100}
-            value={this.props.task.priority}
+            value={this.props.task ? this.props.task.priority : 50}
             onValueChange={(priority)=>this.setState({priority})}
           />
         </View>
