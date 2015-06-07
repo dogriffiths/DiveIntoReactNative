@@ -46,7 +46,15 @@ var TaskStorage = assign({}, EventEmitter.prototype, {
       }
     }
     
-    return tasksArray;
+    return tasksArray.sort((a, b) => {
+      if (a.active && !b.active) {
+        return -1;
+      }
+      if (!a.active && b.active) {
+        return 1;
+      }
+      return b.priority - a.priority;
+    });
   },
   
   save(task) {
