@@ -104,7 +104,7 @@ var TaskInput = React.createClass({
       });
   },
   
-  _onPressUrl() {
+  _onPressGo() {
       var nav = this.props.navigator;
       var eventEmitter = new EventEmitter();
       nav.push({
@@ -128,7 +128,9 @@ var TaskInput = React.createClass({
     if (this.state.id) {
       return (
         <View>
-          <TouchableHighlight style={styles.button} onPress={this._onPressDelete}>
+          <TouchableHighlight 
+              style={[styles.button, {borderColor: '#ee0000', width: 63}]} 
+              onPress={this._onPressDelete}>
             <Text style={{color: '#ee0000'}}>Delete</Text>
           </TouchableHighlight>
         </View>
@@ -181,11 +183,23 @@ var TaskInput = React.createClass({
           </TouchableHighlight>
         </View>
         <View style={styles.row}>
-          <TouchableHighlight onPress={this._onPressUrl}>
-            <Text style={[styles.label, {color: '#007aff'}]}>
-              URL 
-            </Text>
-          </TouchableHighlight>
+          <TextInput
+            style={[styles.textField, styles.url]}
+            placeholder='URL'
+            value={this.state.url}
+            onChangeText={(url)=>{
+              this.setState({url});
+              if (this.props.onValueChange) {
+                this.props.onValueChange(url);
+              }
+            }}
+            keyboardType='url'
+          />
+          <View style={{marginLeft: 15}}>
+            <TouchableHighlight style={[styles.button, {borderColor: '#007aff'}]} onPress={this._onPressGo}>
+              <Text style={{color: '#007aff'}}>Go</Text>
+            </TouchableHighlight>
+          </View>
         </View>
         {this._renderDeleteButton()}
       </ScrollView>
@@ -233,7 +247,7 @@ var styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    width: 63,
+//    width: 63,
     paddingTop: 5,
     paddingBottom: 5,
     paddingLeft: 10,
@@ -241,7 +255,15 @@ var styles = StyleSheet.create({
     fontSize: 14,
     borderWidth: 1, 
     borderRadius: 5,
-    borderColor: '#ee0000',
+  },
+  url: {
+    marginRight: 5, 
+    fontSize: 18,
+    paddingTop: 6,
+    paddingBottom: 6,
+    flex: 1, 
+    alignSelf: 'stretch',
+    height: 26,
   },
 });
 
