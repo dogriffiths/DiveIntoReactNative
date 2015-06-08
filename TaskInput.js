@@ -8,6 +8,7 @@ var React = require('react-native');
 var EventEmitter = require('events').EventEmitter;
 var PhoneInput = require('./PhoneInput');
 var Map = require('./Map');
+var Browser = require('./Browser');
 var TaskStorage = require('./TaskStorage');
 var {
   ScrollView,
@@ -29,6 +30,7 @@ var TaskInput = React.createClass({
       priority: 50,
       phone: null,
       location: null,
+      url: null,
     };
     var task =  this.props.task;
     if (task) {
@@ -39,6 +41,7 @@ var TaskInput = React.createClass({
         priority: task.priority,
         phone: task.phone,
         location: task.location,
+        url: task.url,
       };
     }
     return state;
@@ -54,6 +57,7 @@ var TaskInput = React.createClass({
         priority: state.priority,
         phone: state.phone,
         location: state.location,
+        url: state.url,
       };
       TaskStorage.save(task);
       this.props.navigator.pop();
@@ -89,8 +93,28 @@ var TaskInput = React.createClass({
         passProps: {
           mapRegion: this.state.location,
           eventEmitter,
-          onLocationSet: (region) => {
-            this.state.location = region;
+          onLocationSet: (location) => {
+            this.setState({location});
+          },
+        },
+        rightButtonTitle: 'Set',
+        onRightButtonPress: (() => {
+          eventEmitter.emit('setPressed');
+        }),
+      });
+  },
+  
+  _onPressUrl() {
+      var nav = this.props.navigator;
+      var eventEmitter = new EventEmitter();
+      nav.push({
+        title: 'URL',
+        component: Browser,
+        passProps: {
+          url: this.state.url,
+          eventEmitter,
+          onUrlSet: (url) => {
+            this.setState({url});
           },
         },
         rightButtonTitle: 'Set',
@@ -153,6 +177,13 @@ var TaskInput = React.createClass({
           <TouchableHighlight onPress={this._onPressLocation}>
             <Text style={[styles.label, {color: '#007aff'}]}>
               Location 
+            </Text>
+          </TouchableHighlight>
+        </View>
+        <View style={styles.row}>
+          <TouchableHighlight onPress={this._onPressUrl}>
+            <Text style={[styles.label, {color: '#007aff'}]}>
+              URL 
             </Text>
           </TouchableHighlight>
         </View>
