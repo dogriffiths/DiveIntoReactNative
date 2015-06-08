@@ -13,6 +13,7 @@ var {
     ListView,
     StyleSheet,
     Text,
+    TabBarIOS,
     TouchableHighlight,
     View,
 } = React;
@@ -23,6 +24,7 @@ var Tasks = React.createClass({
         var datasource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         return {
             datasource: datasource.cloneWithRows(TaskStorage.all()),
+            tab: 'listTab',
         };
     },
 
@@ -56,13 +58,27 @@ var Tasks = React.createClass({
 
     render() {
         return (
-          <View style={styles.container}>
+        <View style={styles.container}>
+                <TabBarIOS
+            style={{flex: 1, alignSelf: 'stretch'}}
+                >
+                <TabBarIOS.Item
+            systemIcon='history'
+            style={{flex: 1, alignSelf: 'stretch'}}
+            title='Words'
+            selected={this.state.tab == 'listTab'}
+            onPress={() => {
+                this.setState({tab: 'listTab'});
+            }}
+                >
             <ListView
               dataSource={this.state.datasource}
               initialListSize={24}
               style={styles.list}
               renderRow={this._renderRow}
             />
+          </TabBarIOS.Item>
+          </TabBarIOS>
           </View>
         );
     },
@@ -93,6 +109,7 @@ var styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    marginTop: 65,
     justifyContent: 'center',
     alignItems: 'center',
   },
