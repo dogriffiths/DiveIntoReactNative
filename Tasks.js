@@ -67,6 +67,26 @@ var Tasks = React.createClass({
       }).filter((t)=>{return t != null});
       return annos;
     },
+    
+    _tasksRegion() {
+      var tasks = TaskStorage.all().filter((t)=> {return t.location});
+      if (tasks.length == 0) {
+        return null;
+      }
+      var lats = tasks.map((t)=>t.location.latitude);
+      var lons = tasks.map((t)=>t.location.longitude);
+      var minLat = Math.min.apply(Math, lats);
+      var maxLat = Math.max.apply(Math, lats);
+      var minLon = Math.min.apply(Math, lons);
+      var maxLon = Math.max.apply(Math, lons);
+      var region = {
+        latitude: (minLat + maxLat) / 2,
+        longitude: (minLon + maxLon) / 2,
+        latitudeDelta: 1.2 * (maxLat - minLat),
+        longitudeDelta: 1.2 * (maxLon - minLon),
+      };
+      return region;
+    },
 
     render() {
         return (
@@ -101,12 +121,7 @@ var Tasks = React.createClass({
             >
               <MapView
                 style={{flex: 1, alignSelf: 'stretch'}}
-                region={{
-                  latitude: 0,
-                  longitude: 0,
-                  latitudeDelta: 90,
-                  longitudeDelta: 90,
-                }}
+                region={this._tasksRegion()}
                 annotations={this._taskAnnotations()}
               />
             </TabBarIOS.Item>
