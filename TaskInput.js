@@ -11,6 +11,7 @@ var Map = require('./Map');
 var Browser = require('./Browser');
 var TaskStorage = require('./TaskStorage');
 var {
+  AlertIOS,
   ScrollView,
   SliderIOS,
   StyleSheet,
@@ -80,8 +81,13 @@ var TaskInput = React.createClass({
   },
   
   _onPressDelete() {
-    TaskStorage.delete(this.state.id);
-    this.props.navigator.pop();
+    AlertIOS.alert('Delete', `Delete this task?`, [
+      {text: 'OK', onPress: () => {
+        TaskStorage.delete(this.state.id);
+        this.props.navigator.pop();
+      }},
+      {text: 'Cancel'},
+    ]);
   },
   
   _onPressLocation() {
