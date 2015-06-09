@@ -11,6 +11,7 @@ var React = require('react-native');
 var {
     AppRegistry,
     ListView,
+    MapView,
     StyleSheet,
     Text,
     TabBarIOS,
@@ -59,25 +60,44 @@ var Tasks = React.createClass({
     render() {
         return (
         <View style={styles.container}>
-                <TabBarIOS
-            style={{flex: 1, alignSelf: 'stretch'}}
-                >
-                <TabBarIOS.Item
-            systemIcon='history'
-            style={{flex: 1, alignSelf: 'stretch'}}
-            title='Words'
-            selected={this.state.tab == 'listTab'}
-            onPress={() => {
-                this.setState({tab: 'listTab'});
-            }}
-                >
-            <ListView
-              dataSource={this.state.datasource}
-              initialListSize={24}
-              style={styles.list}
-              renderRow={this._renderRow}
-            />
-          </TabBarIOS.Item>
+          <TabBarIOS
+              style={{flex: 1, alignSelf: 'stretch'}}
+          >
+            <TabBarIOS.Item
+              systemIcon='history'
+              style={{flex: 1, alignSelf: 'stretch'}}
+              title='Words'
+              selected={this.state.tab == 'listTab'}
+              onPress={() => {
+                  this.setState({tab: 'listTab'});
+              }}
+            >
+              <ListView
+                dataSource={this.state.datasource}
+                initialListSize={24}
+                style={styles.list}
+                renderRow={this._renderRow}
+              />
+            </TabBarIOS.Item>
+            <TabBarIOS.Item
+              systemIcon='history'
+              style={{flex: 1, alignSelf: 'stretch'}}
+              title='Map'
+              selected={this.state.tab == 'mapTab'}
+              onPress={() => {
+                  this.setState({tab: 'mapTab'});
+              }}
+            >
+              <MapView
+                style={{flex: 1, alignSelf: 'stretch'}}
+                region={{
+                  latitude: 0,
+                  longitude: 0,
+                  latitudeDelta: 90,
+                  longitudeDelta: 90,
+                }}
+              />
+            </TabBarIOS.Item>
           </TabBarIOS>
           </View>
         );
