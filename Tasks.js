@@ -24,8 +24,8 @@ var Tasks = React.createClass({
     getInitialState() {
         var datasource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         return {
-            datasource: datasource.cloneWithRows(TaskStorage.all()),
-            tab: 'listTab',
+          datasource: datasource.cloneWithRows(TaskStorage.all()),
+          tab: 'listTab',
         };
     },
 
@@ -58,8 +58,14 @@ var Tasks = React.createClass({
     },
     
     _taskAnnotations() {
-      return [{title: 'Lizard Point', subtitle: 'Hotel',
-                 latitude: 49.9586401, longitude: -5.2064806}];
+      var annos = TaskStorage.all().map((task) => {
+        if (task.location) {
+          return {title: task.description,
+            latitude: task.location.latitude, longitude: task.location.longitude};
+        }
+        return null;
+      }).filter((t)=>{return t != null});
+      return annos;
     },
 
     render() {
