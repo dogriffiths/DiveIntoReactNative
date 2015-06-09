@@ -56,6 +56,11 @@ var Tasks = React.createClass({
         }),
       });
     },
+    
+    _taskAnnotations() {
+      return [{title: 'Lizard Point', subtitle: 'Hotel',
+                 latitude: 49.9586401, longitude: -5.2064806}];
+    },
 
     render() {
         return (
@@ -96,6 +101,7 @@ var Tasks = React.createClass({
                   latitudeDelta: 90,
                   longitudeDelta: 90,
                 }}
+                annotations={this._taskAnnotations()}
               />
             </TabBarIOS.Item>
           </TabBarIOS>
