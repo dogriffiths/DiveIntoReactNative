@@ -149,6 +149,33 @@ var TaskInput = React.createClass({
           value={this.props.task ? this.props.task.description : ''}
           onChangeText={(description)=>this.setState({description})}
         />
+        <View style={styles.row}>
+          <PhoneInput
+            value={this.props.task ? this.props.task.phone : ''}
+            onValueChange={(phone)=>this.setState({phone})}
+          />
+        </View>
+        <View style={styles.row}>
+          <TextInput
+            style={[styles.textField, styles.url]}
+            placeholder='URL'
+            value={this.state.url}
+            onChangeText={(url)=>{
+              this.setState({url});
+              if (this.props.onValueChange) {
+                this.props.onValueChange(url);
+              }
+            }}
+            keyboardType='url'
+          />
+          <View style={{marginLeft: 15}}>
+            <TouchableHighlight 
+                style={[styles.button, {borderColor: '#007aff'}]} 
+                onPress={this._onPressGo}>
+              <Text style={{color: '#007aff'}}>Go</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
         <View style={{flexDirection: 'row', alignItems: 'center', paddingBottom: 6}}>
           <Text style={styles.label}>Active</Text>
           <View style={{flex: 1, alignItems: 'flex-end', paddingRight: 6}}>
@@ -157,12 +184,6 @@ var TaskInput = React.createClass({
               onValueChange={(active)=>this.setState({active})}
             />
           </View>
-        </View>
-        <View style={styles.row}>
-          <PhoneInput
-            value={this.props.task ? this.props.task.phone : ''}
-            onValueChange={(phone)=>this.setState({phone})}
-          />
         </View>
         <View style={styles.row}>
           <Text style={styles.label}>Priority</Text>
@@ -181,25 +202,6 @@ var TaskInput = React.createClass({
               Location 
             </Text>
           </TouchableHighlight>
-        </View>
-        <View style={styles.row}>
-          <TextInput
-            style={[styles.textField, styles.url]}
-            placeholder='URL'
-            value={this.state.url}
-            onChangeText={(url)=>{
-              this.setState({url});
-              if (this.props.onValueChange) {
-                this.props.onValueChange(url);
-              }
-            }}
-            keyboardType='url'
-          />
-          <View style={{marginLeft: 15}}>
-            <TouchableHighlight style={[styles.button, {borderColor: '#007aff'}]} onPress={this._onPressGo}>
-              <Text style={{color: '#007aff'}}>Go</Text>
-            </TouchableHighlight>
-          </View>
         </View>
         {this._renderDeleteButton()}
       </ScrollView>
