@@ -2,3 +2,5 @@
 * Introduction
 
 This is the source code for the book /Dive Into React Native/.
+
+Icons courtesy of http://icons8.com

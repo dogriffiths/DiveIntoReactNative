@@ -95,9 +95,9 @@ var Tasks = React.createClass({
               style={{flex: 1, alignSelf: 'stretch'}}
           >
             <TabBarIOS.Item
-              systemIcon='history'
+              icon={{uri: 'ListIcon'}}
+              title='List'
               style={{flex: 1, alignSelf: 'stretch'}}
-              title='Words'
               selected={this.state.tab == 'listTab'}
               onPress={() => {
                   this.setState({tab: 'listTab'});
@@ -111,9 +111,9 @@ var Tasks = React.createClass({
               />
             </TabBarIOS.Item>
             <TabBarIOS.Item
-              systemIcon='downloads'
-              style={{flex: 1, alignSelf: 'stretch'}}
+              icon={{uri: 'MapIcon'}}
               title='Map'
+              style={{flex: 1, alignSelf: 'stretch'}}
               selected={this.state.tab == 'mapTab'}
               onPress={() => {
                   this.setState({tab: 'mapTab'});
