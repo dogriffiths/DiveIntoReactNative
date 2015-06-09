@@ -111,7 +111,7 @@ var Tasks = React.createClass({
               />
             </TabBarIOS.Item>
             <TabBarIOS.Item
-              systemIcon='history'
+              systemIcon='downloads'
               style={{flex: 1, alignSelf: 'stretch'}}
               title='Map'
               selected={this.state.tab == 'mapTab'}
