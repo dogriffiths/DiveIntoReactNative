@@ -27,7 +27,7 @@ var TaskInput = React.createClass({
     var state = {
       id: null,
       description: '',
-      active: true,
+      complete: false,
       priority: 50,
       phone: null,
       location: null,
@@ -38,7 +38,7 @@ var TaskInput = React.createClass({
       state = {
         id: task.id,
         description: task.description,
-        active: task.active,
+        complete: task.complete,
         priority: task.priority,
         phone: task.phone,
         location: task.location,
@@ -54,7 +54,7 @@ var TaskInput = React.createClass({
       var task = {
         id: state.id,
         description: state.description,
-        active: state.active,
+        complete: state.complete,
         priority: state.priority,
         phone: state.phone,
         location: state.location,
@@ -183,11 +183,11 @@ var TaskInput = React.createClass({
           </View>
         </View>
         <View style={{flexDirection: 'row', alignItems: 'center', paddingBottom: 6}}>
-          <Text style={styles.label}>Active</Text>
+          <Text style={styles.label}>Complete</Text>
           <View style={{flex: 1, alignItems: 'flex-end', paddingRight: 6}}>
             <SwitchIOS
-              value={this.state.active}
-              onValueChange={(active)=>this.setState({active})}
+              value={this.state.complete}
+              onValueChange={(complete)=>this.setState({complete})}
             />
           </View>
         </View>

@@ -57,6 +57,10 @@ var TaskStorage = assign({}, EventEmitter.prototype, {
     });
   },
   
+  get(id) {
+    return _tasks[id];
+  },
+  
   save(task) {
     if (task.id === null) {
       task.id = uuid.v4();

@@ -4,6 +4,7 @@
  */
 'use strict';
 
+var Checkbox = require('./Checkbox');
 var TaskInput = require('./TaskInput');
 var EventEmitter = require('events').EventEmitter;
 var TaskStorage = require('./TaskStorage');
@@ -135,17 +136,25 @@ var Tasks = React.createClass({
         var color = `rgb(${p}, ${255 - p}, 0)`;
         return (
           <TouchableHighlight 
-            style={styles.row}
             underlayColor='#f4f4f4'
-            onPress={() => this._pressRow(rowId, task)}
+            onPress={() => this._pressRow(rowId, TaskStorage.get(task.id))}
           >
+          <View
+            style={styles.row}
+          >
+            <Checkbox value={task.complete} onValueChange={(value) => {
+              task.complete = value;
+              TaskStorage.save(task);
+            }}/>
             <View style={{marginLeft: 5}}>
               <Text numberOfLines={1} style={{fontSize: 16}}>
                 {task.description}
               </Text>
               <Text style={{fontSize: 12, color,}}>{Math.round(task.priority)}%</Text>
             </View>
-          </TouchableHighlight>);
+          </View>
+          </TouchableHighlight>
+          );
     }
 });
 
