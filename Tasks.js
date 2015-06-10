@@ -143,8 +143,9 @@ var Tasks = React.createClass({
             style={styles.row}
           >
             <Checkbox value={task.complete} onValueChange={(value) => {
-              task.complete = value;
-              TaskStorage.save(task);
+              var t = TaskStorage.get(task.id);
+              t.complete = value;
+              TaskStorage.save(t);
             }}/>
             <View style={{marginLeft: 5}}>
               <Text numberOfLines={1} style={{fontSize: 16}}>
