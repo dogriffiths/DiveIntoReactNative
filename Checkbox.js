@@ -5,18 +5,38 @@
 'use strict';
 
 var React = require('react-native');
+var PropTypes = require('ReactPropTypes');
+
 var {
     Image,
     TouchableHighlight,
+    Text,
     View,
 } = React;
 
+var SWITCH = 'switch';
+
 var Checkbox = React.createClass({
+  propTypes: {
+    onValueChange: PropTypes.func,
+  },
+  
+  getDefaultProps() {
+    return {
+      value: false,
+    };
+  },
+
   getInitialState() {
       return {
           value: this.props.value,
-          onValueChange: this.props.onValueChange,
       };
+  },
+
+  _onChange: function(newValue) {
+    this.setState({value: newValue});
+    this.props.onValueChange && this.props.onValueChange(newValue);
+    this.props.value = newValue;
   },
   
   render() {
@@ -24,14 +44,14 @@ var Checkbox = React.createClass({
         <TouchableHighlight 
           underlayColor='#f4f4f4'
           onPress={() => {
-            var value = !this.state.value;
-            this.setState({value});
-            this.state.onValueChange(value);
+            this._onChange(!this.state.value);
           }}
         >
+        <View>
           <Image 
             style={{width: 25, height: 25, margin: 15,}} 
-            source={{uri: this.state.value ? 'Checked' : 'Unchecked'}} />
+            source={{uri: this.props.value ? 'Checked' : 'Unchecked'}} />
+            </View>
         </TouchableHighlight>
       );
   },
