@@ -1,7 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
 
 var React = require('react-native');
@@ -52,7 +48,7 @@ var ReactTasks = React.createClass({
           passProps: {ref: 'tasks'},
           rightButtonTitle: 'New',
           onRightButtonPress: this._onNewTask,
-          }}
+        }}
         style={{flex: 1}}
       />
     );

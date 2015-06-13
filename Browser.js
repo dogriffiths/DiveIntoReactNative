@@ -1,17 +1,13 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
 
 var React = require('react-native');
 var {
-    AppRegistry,
-    MapView,
-    StyleSheet,
-    Text,
-    View,
-    WebView,
+  AppRegistry,
+  MapView,
+  StyleSheet,
+  Text,
+  View,
+  WebView,
 } = React;
 
 var Map = React.createClass({
@@ -24,9 +20,9 @@ var Map = React.createClass({
   },
   
   getInitialState() {
-      return {
-        url: this.props.url || 'http://www.google.com',
-      };
+    return {
+      url: this.props.url || 'http://www.google.com',
+    };
   },
   
   _onUrlSet() {
@@ -41,14 +37,14 @@ var Map = React.createClass({
   },
 
   render() {
-      return (
-        <View style={{flex: 1}}>
-          <WebView
-            url={this.state.url}
-            onNavigationStateChange={this._onNavigationStateChange}
-          />
-        </View>
-      );
+    return (
+      <View style={{flex: 1}}>
+        <WebView
+          url={this.state.url}
+          onNavigationStateChange={this._onNavigationStateChange}
+        />
+      </View>
+    );
   },
 });
 
