@@ -1,16 +1,12 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
 
 var React = require('react-native');
 var {
-    AppRegistry,
-    MapView,
-    StyleSheet,
-    Text,
-    View,
+  AppRegistry,
+  MapView,
+  StyleSheet,
+  Text,
+  View,
 } = React;
 
 var Map = React.createClass({
@@ -23,9 +19,9 @@ var Map = React.createClass({
   },
   
   getInitialState() {
-      return {
-          mapRegion: this.props.mapRegion,
-      };
+    return {
+      mapRegion: this.props.mapRegion,
+    };
   },
   
   _onLocationSet() {
@@ -45,27 +41,27 @@ var Map = React.createClass({
   },
 
   render() {
-      return (
-        <View style={styles.container}>
-          <MapView
-            ref="map"
-            style={{flex: 1, alignSelf: 'stretch'}}
-            region={this.props.mapRegion}
-            showsUserLocation={this.state.mapRegion === null}
-            onRegionChangeComplete={this._onRegionChangeComplete}
-          />
-        </View>
-      );
+    return (
+      <View style={styles.container}>
+        <MapView
+          ref="map"
+          style={{flex: 1, alignSelf: 'stretch'}}
+          region={this.props.mapRegion}
+          showsUserLocation={this.state.mapRegion === null}
+          onRegionChangeComplete={this._onRegionChangeComplete}
+        />
+      </View>
+    );
   },
 });
 
 var styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
 });
 
 module.exports = Map;

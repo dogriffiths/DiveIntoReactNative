@@ -1,7 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
 
 var EventEmitter = require('events').EventEmitter;
@@ -34,7 +30,6 @@ var TaskStorage = assign({}, EventEmitter.prototype, {
       AlertIOS.alert('Reading tasks', error.message);
     })
     .done();
-
   },
   
   all() {
@@ -72,8 +67,7 @@ var TaskStorage = assign({}, EventEmitter.prototype, {
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(_tasks))
     .catch((error) => {
       AlertIOS.alert('Storing tasks', error.message);
-    })
-    .done();
+    }).done();
 
     this.emit(this.CHANGE_EVENT);
   },

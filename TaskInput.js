@@ -1,7 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
 
 var React = require('react-native');
@@ -76,8 +72,8 @@ var TaskInput = React.createClass({
       <Text style={{
         width: 40, 
         color,
-        }}>{Math.round(this.state.priority)}%</Text>
-      );
+      }}>{Math.round(this.state.priority)}%</Text>
+    );
   },
   
   _onPressDelete() {
@@ -91,43 +87,43 @@ var TaskInput = React.createClass({
   },
   
   _onPressLocation() {
-      var nav = this.props.navigator;
-      var eventEmitter = new EventEmitter();
-      nav.push({
-        title: 'Location',
-        component: Map,
-        passProps: {
-          mapRegion: this.state.location,
-          eventEmitter,
-          onLocationSet: (location) => {
-            this.setState({location});
-          },
+    var nav = this.props.navigator;
+    var eventEmitter = new EventEmitter();
+    nav.push({
+      title: 'Location',
+      component: Map,
+      passProps: {
+        mapRegion: this.state.location,
+        eventEmitter,
+        onLocationSet: (location) => {
+          this.setState({location});
         },
-        rightButtonTitle: 'Set',
-        onRightButtonPress: (() => {
-          eventEmitter.emit('setPressed');
-        }),
-      });
+      },
+      rightButtonTitle: 'Set',
+      onRightButtonPress: (() => {
+        eventEmitter.emit('setPressed');
+      }),
+    });
   },
   
   _onPressGo() {
-      var nav = this.props.navigator;
-      var eventEmitter = new EventEmitter();
-      nav.push({
-        title: 'URL',
-        component: Browser,
-        passProps: {
-          url: this.state.url,
-          eventEmitter,
-          onUrlSet: (url) => {
-            this.setState({url});
-          },
+    var nav = this.props.navigator;
+    var eventEmitter = new EventEmitter();
+    nav.push({
+      title: 'URL',
+      component: Browser,
+      passProps: {
+        url: this.state.url,
+        eventEmitter,
+        onUrlSet: (url) => {
+          this.setState({url});
         },
-        rightButtonTitle: 'Set',
-        onRightButtonPress: (() => {
-          eventEmitter.emit('setPressed');
-        }),
-      });
+      },
+      rightButtonTitle: 'Set',
+      onRightButtonPress: (() => {
+        eventEmitter.emit('setPressed');
+      }),
+    });
   },
   
   _renderDeleteButton() {
@@ -135,8 +131,8 @@ var TaskInput = React.createClass({
       return (
         <View>
           <TouchableHighlight 
-              style={[styles.button, {borderColor: '#ee0000', width: 63}]} 
-              onPress={this._onPressDelete}>
+            style={[styles.button, {borderColor: '#ee0000', width: 63}]} 
+            onPress={this._onPressDelete}>
             <Text style={{color: '#ee0000'}}>Delete</Text>
           </TouchableHighlight>
         </View>
@@ -176,9 +172,9 @@ var TaskInput = React.createClass({
           />
           <View style={{marginLeft: 15}}>
             <TouchableHighlight 
-                style={[styles.button, {borderColor: '#007aff'}]} 
-                onPress={this._onPressGo}>
-              <Text style={{color: '#007aff'}}>Go</Text>
+              style={[styles.button, {borderColor: '#007aff'}]} 
+              onPress={this._onPressGo}>
+            <Text style={{color: '#007aff'}}>Go</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -255,7 +251,6 @@ var styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-//    width: 63,
     paddingTop: 5,
     paddingBottom: 5,
     paddingLeft: 10,

@@ -1,17 +1,13 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
 'use strict';
 
 var React = require('react-native');
 var PropTypes = require('ReactPropTypes');
 
 var {
-    Image,
-    TouchableHighlight,
-    Text,
-    View,
+  Image,
+  TouchableHighlight,
+  Text,
+  View,
 } = React;
 
 var SWITCH = 'switch';
@@ -28,9 +24,9 @@ var Checkbox = React.createClass({
   },
 
   getInitialState() {
-      return {
-          value: this.props.value,
-      };
+    return {
+      value: this.props.value,
+    };
   },
 
   _onChange: function(newValue) {
@@ -40,20 +36,20 @@ var Checkbox = React.createClass({
   },
   
   render() {
-      return (
-        <TouchableHighlight 
-          underlayColor='#f4f4f4'
-          onPress={() => {
-            this._onChange(!this.state.value);
-          }}
-        >
+    return (
+      <TouchableHighlight 
+        underlayColor='#f4f4f4'
+        onPress={() => {
+          this._onChange(!this.state.value);
+        }}
+      >
         <View>
-          <Image 
-            style={{width: 25, height: 25, margin: 15,}} 
-            source={{uri: this.props.value ? 'Checked' : 'Unchecked'}} />
-            </View>
-        </TouchableHighlight>
-      );
+        <Image 
+          style={{width: 25, height: 25, margin: 15,}} 
+          source={{uri: this.props.value ? 'Checked' : 'Unchecked'}} />
+        </View>
+      </TouchableHighlight>
+    );
   },
 });
 
