@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var {
+  ActivityIndicatorIOS,
   AppRegistry,
   MapView,
   StyleSheet,
@@ -10,7 +11,7 @@ var {
   WebView,
 } = React;
 
-var Map = React.createClass({
+module.exports = React.createClass({
   componentDidMount() {
     this.props.eventEmitter.on('setPressed', this._onUrlSet);
   },  
@@ -42,10 +43,15 @@ var Map = React.createClass({
         <WebView
           url={this.state.url}
           onNavigationStateChange={this._onNavigationStateChange}
-        />
+        >
+          <ActivityIndicatorIOS
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: 40,
+            }} color="white" />
+        </WebView>
       </View>
     );
   },
 });
-
-module.exports = Map;
